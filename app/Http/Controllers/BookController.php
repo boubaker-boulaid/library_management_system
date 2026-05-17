@@ -107,7 +107,9 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        return view('books.edit', compact('book'));
+        $categories = Category::latest()->get();
+        $book->load('categories');
+        return view('books.edit', compact('book', 'categories'));
     }
 
     /**
@@ -115,6 +117,7 @@ class BookController extends Controller
      */
     public function update(UpdateBookRequest $request, Book $book)
     {
+        DB::beginTransaction();
         try {
 
             $validated = $request->validated();
@@ -125,7 +128,7 @@ class BookController extends Controller
             }
 
             //checks if a file with name cover was uploaded and the upload went successfully without errors
-            if ($request->hasFile('cover') && $request->file('cover')->isValid()) {
+            if ($request->hasFile('cover') && $request->file('cover')->isValid()){
                 $image = $request->file('cover');
                 $imageName = time() . '_' . $image->getClientOriginalName(); //set a unique name to the cover 
                 $image->move(public_path('covers'), $imageName); //move the cover to public/covers/
@@ -134,11 +137,18 @@ class BookController extends Controller
 
             $book->update($validated);
 
+            if (!empty($validated['categories'])){
+                $book->categories()->sync($validated['categories']);
+            }
+
+            DB::commit();
+
             //Log success
             Log::info('Book updated successfully: ' . $validated['designation']);
 
             return redirect()->route('book.show', $book)->with('success', __('books.updated_success'));
         } catch (\Exception $e) {
+            DB::rollBack();
 
             //Log error 
             Log::error('error updating the book ' . $book->designation . ': ' . $e->getMessage());
