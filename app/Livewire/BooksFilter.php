@@ -11,8 +11,20 @@ class BooksFilter extends Component
 {
     use WithPagination;
     public $sort = 'sort_newest';
+    public $category = 'All';
+    public $language = 'All';
 
     public function updatedSort()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedCategory()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedLanguage()
     {
         $this->resetPage();
     }
@@ -32,6 +44,16 @@ class BooksFilter extends Component
         } elseif ($this->sort === 'sort_price_low_high') {
             $query->orderBy('prix', 'asc');
         }   
+        
+        if ($this->category !== 'All') {
+            $query->whereHas('categories', function ($q) {
+                $q->where('name', $this->category);
+            });
+        }
+
+        if ($this->language !== 'All') {
+            $query->where('langue', $this->language);
+        }
 
         $books = $query->with('categories:id,name')->paginate(4);
         $categories = Category::latest()->get();

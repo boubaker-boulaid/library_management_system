@@ -183,26 +183,6 @@ class BookController extends Controller
             return redirect()->back()->withInput()->with('error', __('books.deleted_error'));
         }
     }
-
-    public function searchPage (Request $request) 
-    {
-        $query = Book::query()
-                    ->when($request->sort, function ($query,$sort) {
-                        [$sortVal, $direction] = explode('-',$sort);
-                        $query->orderBy($sortVal ?? 'created_at', $direction ?? 'desc');
-                    })
-                    ->when($request->categorie, function ($query, $cat) {
-                        $query->where('categorie', 'like', '%'.$cat.'%');
-                    })->when($request->langue, function ($query, $langue) {
-                        $query->where('langue',$langue);
-                    })
-                    ;
-
-        $booksCount = $query->count();
-        $books = $query->paginate(4)->withQueryString();
-        return view('books',compact('books','booksCount'));
-    }
-
     public function mailBookToUser (Book $book)
     {
         $user = Auth::user();

@@ -14,13 +14,13 @@
 
                     <div>
                         <h5 class="font-semibold text-gray-800 mb-3">{{ __('books.filter_categories') }}</h5>
-                        <select name="category" onchange="window.location.href = this.value"
+                        <select name="category" wire:model.live="category"
                             class="w-full bg-gray-50 border border-gray-300 rounded-md text-gray-800 focus:ring-blue-500 focus:border-blue-500 text-sm p-2.5">
-                            <option value="">
+                            <option value="All">
                                 All
                             </option>
                             @foreach ($categories as $category)
-                                <option value="">
+                                <option value="{{ $category->name }}">
                                     {{$category->name }}
                                 </option>
                             @endforeach
@@ -30,46 +30,40 @@
                     <div>
                         <h5 class="font-semibold text-gray-800 mb-3">{{ __('books.filter_language') }}</h5>
                         <div class="space-y-2">
-                            <label class="flex items-center text-gray-600">
-                                <input type="checkbox" onchange="window.location.href = this.value"
-                                    value="{{ route('books', array_merge(request()->except('page', 'langue'), [])) }}"
-                                    {{ request('langue') ? '' : 'checked' }}
-                                    class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                            <label class="flex items-center text-gray-600 cursor-pointer">
+                                <input type="radio" wire:model.live="language"
+                                    value="All" 
+                                    class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
                                 <span class="ml-2">{{ __('books.filter_all_language') }}</span>
                             </label>
-                            <label class="flex items-center text-gray-600">
-                                <input type="checkbox" onchange="window.location.href = this.value"
-                                    value="{{ route('books', array_merge(request()->except('page'), ['langue' => 'Espagnol'])) }}"
-                                    {{ request('langue') == 'Espagnol' ? 'checked' : '' }}
-                                    class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                            <label class="flex items-center text-gray-600 cursor-pointer">
+                                <input type="radio" wire:model.live="language"
+                                    value="Espagnol"
+                                    class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
                                 <span class="ml-2">{{ __('books.filter_spanish') }}</span>
                             </label>
-                            <label class="flex items-center text-gray-600">
-                                <input type="checkbox" onchange="window.location.href = this.value"
-                                    value="{{ route('books', array_merge(request()->except('page'), ['langue' => 'Francais'])) }}"
-                                    {{ request('langue') == 'Francais' ? 'checked' : '' }}
-                                    class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                            <label class="flex items-center text-gray-600 cursor-pointer">
+                                <input type="radio" wire:model.live="language"
+                                    value="Francais"                                    
+                                    class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
                                 <span class="ml-2">{{ __('books.filter_french') }}</span>
                             </label>
-                            <label class="flex items-center text-gray-600">
-                                <input type="checkbox" onchange="window.location.href = this.value"
-                                    value="{{ route('books', array_merge(request()->except('page'), ['langue' => 'Allemand'])) }}"
-                                    {{ request('langue') == 'Allemand' ? 'checked' : '' }}
-                                    class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                            <label class="flex items-center text-gray-600 cursor-pointer">
+                                <input type="radio" wire:model.live="language"
+                                    value="Allemand"                                    
+                                    class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
                                 <span class="ml-2">{{ __('books.filter_german') }}</span>
                             </label>
-                            <label class="flex items-center text-gray-600">
-                                <input type="checkbox" onchange="window.location.href = this.value"
-                                    value="{{ route('books', array_merge(request()->except('page'), ['langue' => 'Arabe'])) }}"
-                                    {{ request('langue') == 'Arabe' ? 'checked' : '' }}
-                                    class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                            <label class="flex items-center text-gray-600 cursor-pointer">
+                                <input type="radio" wire:model.live="language"
+                                    value="Arabe"
+                                    class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
                                 <span class="ml-2">{{ __('books.filter_arabic') }}</span>
                             </label>
-                            <label class="flex items-center text-gray-600">
-                                <input type="checkbox" onchange="window.location.href = this.value"
-                                    value="{{ route('books', array_merge(request()->except('page'), ['langue' => 'Anglais'])) }}"
-                                    {{ request('langue') == 'Anglais' ? 'checked' : '' }}
-                                    class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                            <label class="flex items-center text-gray-600 cursor-pointer">
+                                <input type="radio" wire:model.live="language"
+                                    value="Anglais"
+                                    class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
                                 <span class="ml-2">{{ __('books.filter_english') }}</span>
                             </label>
                         </div>
