@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
+use App\Models\Book;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,16 +15,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $categories = Category::all();
 
-        // User::firstOrCreate(
-        //     ['email' => 'test@gmail.com'],
-        //     [
-        //         'name' => 'boubaker',
-        //         'password' => 'password',
-        //         'role' => 'admin',
-        //         'email_verified_at' => now(),
-        //     ]
-        // );
+        Book::chunk(100, function($books) use ($categories) {
+            foreach ($books as $book){
+                $book->categories()->syncWithoutDetaching($categories->random());
+            }
+        });
+
+        
+        // $this->call([
+        //     CategorySeeder::class,
+        // ]);
     }
 }

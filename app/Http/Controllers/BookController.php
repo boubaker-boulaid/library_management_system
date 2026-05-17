@@ -6,8 +6,10 @@ use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Mail\SendBook;
 use App\Models\Book;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -45,7 +47,8 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('books.create');
+        $categories = Category::latest()->get();
+        return view('books.create', compact('categories'));
     }
 
     /**
@@ -53,6 +56,8 @@ class BookController extends Controller
      */
     public function store(StoreBookRequest $request)
     {
+        DB::beginTransaction();
+
         try {
 
             $validated = $request->validated();
@@ -64,13 +69,21 @@ class BookController extends Controller
                 $validated['cover'] = $imageName;
             }
 
-            Book::create($validated);
+            
 
+            $book = Book::create($validated);
+            
+            if (!empty($validated['categories'])){
+                $book->categories()->sync($validated['categories']);
+            }
+
+            DB::commit();
             //Log the success
             Log::info('Book added successfully: ' . $validated['designation']);
 
             return redirect()->route('book.index')->with('success', __('books.added_success'));
         } catch (\Exception $e) {
+            DB::rollBack();
 
             //Log the error
             Log::error('Error adding book: ' . $e->getMessage());
@@ -85,6 +98,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
+        $book->load('categories');
         return view('books.show', compact('book'));
     }
 
@@ -93,7 +107,9 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        return view('books.edit', compact('book'));
+        $categories = Category::latest()->get();
+        $book->load('categories');
+        return view('books.edit', compact('book', 'categories'));
     }
 
     /**
@@ -101,6 +117,7 @@ class BookController extends Controller
      */
     public function update(UpdateBookRequest $request, Book $book)
     {
+        DB::beginTransaction();
         try {
 
             $validated = $request->validated();
@@ -111,7 +128,7 @@ class BookController extends Controller
             }
 
             //checks if a file with name cover was uploaded and the upload went successfully without errors
-            if ($request->hasFile('cover') && $request->file('cover')->isValid()) {
+            if ($request->hasFile('cover') && $request->file('cover')->isValid()){
                 $image = $request->file('cover');
                 $imageName = time() . '_' . $image->getClientOriginalName(); //set a unique name to the cover 
                 $image->move(public_path('covers'), $imageName); //move the cover to public/covers/
@@ -120,11 +137,18 @@ class BookController extends Controller
 
             $book->update($validated);
 
+            if (!empty($validated['categories'])){
+                $book->categories()->sync($validated['categories']);
+            }
+
+            DB::commit();
+
             //Log success
             Log::info('Book updated successfully: ' . $validated['designation']);
 
             return redirect()->route('book.show', $book)->with('success', __('books.updated_success'));
         } catch (\Exception $e) {
+            DB::rollBack();
 
             //Log error 
             Log::error('error updating the book ' . $book->designation . ': ' . $e->getMessage());
@@ -159,26 +183,6 @@ class BookController extends Controller
             return redirect()->back()->withInput()->with('error', __('books.deleted_error'));
         }
     }
-
-    public function searchPage (Request $request) 
-    {
-        $query = Book::query()
-                    ->when($request->sort, function ($query,$sort) {
-                        [$sortVal, $direction] = explode('-',$sort);
-                        $query->orderBy($sortVal ?? 'created_at', $direction ?? 'desc');
-                    })
-                    ->when($request->categorie, function ($query, $cat) {
-                        $query->where('categorie', 'like', '%'.$cat.'%');
-                    })->when($request->langue, function ($query, $langue) {
-                        $query->where('langue',$langue);
-                    })
-                    ;
-
-        $booksCount = $query->count();
-        $books = $query->paginate(4)->withQueryString();
-        return view('books',compact('books','booksCount'));
-    }
-
     public function mailBookToUser (Book $book)
     {
         $user = Auth::user();

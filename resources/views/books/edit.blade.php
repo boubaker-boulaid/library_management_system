@@ -71,10 +71,15 @@
 
                     <div class="m-4">
                         <label for="categorie">{{ __('books.category') }}</label>
-                        <input type="text" id="categorie" name="categorie"
-                            class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            value="{{old('categorie', $book->categorie ?? '')}}">
-                        @error('categorie')
+                        <select name="categories[]" multiple
+                            class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-800 text-sm min-h-[120px]">
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}"  {{ in_array($category->id, old('categories', $book->categories->pluck('id')->toArray())) ? 'selected' : ''}}>
+                                    {{$category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('categories')
                             <span class="text-red-500 text-sm mt-2">{{$message}}</span>
                         @enderror
                     </div>
