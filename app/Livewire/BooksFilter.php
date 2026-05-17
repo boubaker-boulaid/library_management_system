@@ -13,6 +13,7 @@ class BooksFilter extends Component
     public $sort = 'sort_newest';
     public $category = 'All';
     public $language = 'All';
+    public $type = 'All';
 
     public function updatedSort()
     {
@@ -25,6 +26,11 @@ class BooksFilter extends Component
     }
 
     public function updatedLanguage()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedType()
     {
         $this->resetPage();
     }
@@ -53,6 +59,10 @@ class BooksFilter extends Component
 
         if ($this->language !== 'All') {
             $query->where('langue', $this->language);
+        }
+
+        if ($this->type !== 'All') {
+            $query->where('type', $this->type);
         }
 
         $books = $query->with('categories:id,name')->paginate(4);
