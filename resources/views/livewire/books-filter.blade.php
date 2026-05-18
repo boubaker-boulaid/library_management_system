@@ -52,7 +52,7 @@
                             <label class="flex items-center text-gray-600 cursor-pointer">
                                 <input type="radio" wire:model.live="type" value="All"
                                     class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
-                                <span class="ml-2">All</span>
+                                <span class="ml-2">{{ __('books.filter_all_language') }}</span>
                             </label>
                             <label class="flex items-center text-gray-600 cursor-pointer">
                                 <input type="radio" wire:model.live="type" value="Texte"
