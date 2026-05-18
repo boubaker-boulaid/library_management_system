@@ -30,7 +30,8 @@ class UpdateBookRequest extends FormRequest
             'editeur' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'categories' => 'required|array|exists:categories,id'
+            'categories' => 'required|array|exists:categories,id',
+            'language_id' => 'nullable|exists:languages,id'
         ];
     }
 }

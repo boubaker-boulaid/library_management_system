@@ -90,6 +90,22 @@
                     </div>
 
                     <div class="m-4">
+                        <label for="language_id" class="block text-sm font-medium text-gray-700 mb-2">{{ __('books.filter_language') }}</label>
+                        <select name="language_id" id="language_id"
+                            class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-800 text-sm">
+                            <option value="">Select Language</option>
+                            @foreach ($languages as $language)
+                                <option value="{{ $language->id }}" {{ old('language_id') == $language->id ? 'selected' : '' }}>
+                                    {{ $language->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('language_id')
+                            <span class="text-red-500 text-sm mt-2 block">{{$message}}</span>
+                        @enderror
+                    </div>
+
+                    <div class="m-4">
                         <label for="description">{{ __('books.description') }}</label>
                         <textarea name="description" id="description" cols="30" rows="10"
                             class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">

@@ -13,7 +13,7 @@ class Book extends Model
     use HasFactory;
 
     protected $fillable = ['designation', 'description', 'prix', 'auteur', 'cover', 'type', 
-                            'langue','annee', 'editeur', 'categorie'];
+                            'language_id','annee', 'editeur', 'categorie'];
 
     public function categories()
     {

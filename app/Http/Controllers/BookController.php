@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateBookRequest;
 use App\Mail\SendBook;
 use App\Models\Book;
 use App\Models\Category;
+use App\Models\Language;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -48,7 +49,8 @@ class BookController extends Controller
     public function create()
     {
         $categories = Category::latest()->get();
-        return view('books.create', compact('categories'));
+        $languages = Language::latest()->get();
+        return view('books.create', compact('categories', 'languages'));
     }
 
     /**
@@ -109,7 +111,9 @@ class BookController extends Controller
     {
         $categories = Category::latest()->get();
         $book->load('categories');
-        return view('books.edit', compact('book', 'categories'));
+        $languages = Language::latest()->get();
+        $book->load('language');
+        return view('books.edit', compact('book', 'categories', 'languages'));
     }
 
     /**
