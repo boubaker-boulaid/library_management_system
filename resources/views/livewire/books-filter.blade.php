@@ -36,37 +36,14 @@
                                     class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
                                 <span class="ml-2">{{ __('books.filter_all_language') }}</span>
                             </label>
-                            <label class="flex items-center text-gray-600 cursor-pointer">
-                                <input type="radio" wire:model.live="language"
-                                    value="Espagnol"
-                                    class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
-                                <span class="ml-2">{{ __('books.filter_spanish') }}</span>
-                            </label>
-                            <label class="flex items-center text-gray-600 cursor-pointer">
-                                <input type="radio" wire:model.live="language"
-                                    value="Francais"                                    
-                                    class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
-                                <span class="ml-2">{{ __('books.filter_french') }}</span>
-                            </label>
-                            <label class="flex items-center text-gray-600 cursor-pointer">
-                                <input type="radio" wire:model.live="language"
-                                    value="Allemand"                                    
-                                    class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
-                                <span class="ml-2">{{ __('books.filter_german') }}</span>
-                            </label>
-                            <label class="flex items-center text-gray-600 cursor-pointer">
-                                <input type="radio" wire:model.live="language"
-                                    value="Arabe"
-                                    class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
-                                <span class="ml-2">{{ __('books.filter_arabic') }}</span>
-                            </label>
-                            <label class="flex items-center text-gray-600 cursor-pointer">
-                                <input type="radio" wire:model.live="language"
-                                    value="Anglais"
-                                    class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
-                                <span class="ml-2">{{ __('books.filter_english') }}</span>
-                            </label>
-                        </div>
+                            @foreach ($languages as $language)
+                                <label class="flex items-center text-gray-600 cursor-pointer">
+                                    <input type="radio" wire:model.live="language"
+                                        value="{{ $language->id }}"
+                                        class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    <span class="ml-2">{{ $language->name }}</span>
+                                </label>
+                            @endforeach
                     </div>
 
                     <div>
