@@ -54,12 +54,18 @@
                     </div>
 
                     <div class="m-4">
-                        <label for="type">{{ __('books.type') }}</label>
-                        <input type="text" id="type" name="type"
-                            class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            value="{{old('type')}}">
-                        @error('type')
-                            <span class="text-red-500 text-sm mt-2">{{$message}}</span>
+                        <label for="type_id" class="block text-sm font-medium text-gray-700 mb-2">{{ __('books.type') }}</label>
+                        <select name="type_id" id="type_id"
+                            class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-800 text-sm">
+                            <option value="">Select Type</option>
+                            @foreach ($types as $type)
+                                <option value="{{ $type->id }}" {{ old('type_id') == $type->id ? 'selected' : '' }}>
+                                    {{ $type->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('type_id')
+                            <span class="text-red-500 text-sm mt-2 block">{{$message}}</span>
                         @enderror
                     </div>
 

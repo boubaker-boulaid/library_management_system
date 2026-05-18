@@ -8,6 +8,7 @@ use App\Mail\SendBook;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Language;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -50,7 +51,8 @@ class BookController extends Controller
     {
         $categories = Category::latest()->get();
         $languages = Language::latest()->get();
-        return view('books.create', compact('categories', 'languages'));
+        $types = Type::latest()->get();
+        return view('books.create', compact('categories', 'languages', 'types'));
     }
 
     /**
@@ -113,7 +115,9 @@ class BookController extends Controller
         $book->load('categories');
         $languages = Language::latest()->get();
         $book->load('language');
-        return view('books.edit', compact('book', 'categories', 'languages'));
+        $types = Type::latest()->get();
+        $book->load('type');
+        return view('books.edit', compact('book', 'categories', 'languages', 'types'));
     }
 
     /**

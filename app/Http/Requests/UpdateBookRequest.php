@@ -25,7 +25,7 @@ class UpdateBookRequest extends FormRequest
             'designation' => 'required|string|max:255',
             'auteur' => 'required|string|max:255',
             'prix' => 'required|numeric|gt:0',
-            'type' => 'required|string|max:255',
+            'type_id' => 'required|exists:types,id',
             'annee' => 'nullable|date',
             'editeur' => 'nullable|string|max:255',
             'description' => 'nullable|string',
