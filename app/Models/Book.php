@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
+use App\Models\Language;
 
 class Book extends Model
 {
@@ -17,5 +18,10 @@ class Book extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function language()
+    {
+        return $this->belongsTo(Language::class);
     }
 }
