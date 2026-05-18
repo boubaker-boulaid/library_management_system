@@ -34,7 +34,7 @@
                 </div>
                 <div class="flex flex-col">
                     <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ __('email.language') }}</span>
-                    <span class="text-slate-700 font-medium">{{ $book->langue }}</span>
+                    <span class="text-slate-700 font-medium">{{ $book->language?->name }}</span>
                 </div>
                 <div class="flex flex-col">
                     <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ __('email.publisher') }}</span>
@@ -42,7 +42,7 @@
                 </div>
                 <div class="flex flex-col">
                     <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ __('email.type') }}</span>
-                    <span class="text-slate-700 font-medium">{{ $book->type }}</span>
+                    <span class="text-slate-700 font-medium">{{ $book->type?->name }}</span>
                 </div>
                 @if($book->annee)
                 <div class="flex flex-col">
