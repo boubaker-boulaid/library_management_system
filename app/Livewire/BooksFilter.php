@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Language;
+use App\Models\Type;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -63,18 +64,20 @@ class BooksFilter extends Component
         }
 
         if ($this->type !== 'All') {
-            $query->where('type', $this->type);
+            $query->where('type_id', $this->type);
         }
 
         $books = $query->with('categories:id,name')->paginate(4);
         $categories = Category::latest()->get();
         $languages = Language::latest()->get();
+        $types = Type::latest()->get();
 
         return view('livewire.books-filter', [
             'books' => $books,
             'booksCount' => $books->total(),
             'categories' => $categories,
-            'languages' => $languages
+            'languages' => $languages,
+            'types' => $types
         ]);
     }
 }

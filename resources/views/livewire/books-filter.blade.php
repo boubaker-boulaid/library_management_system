@@ -54,26 +54,13 @@
                                     class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
                                 <span class="ml-2">{{ __('books.filter_all_language') }}</span>
                             </label>
-                            <label class="flex items-center text-gray-600 cursor-pointer">
-                                <input type="radio" wire:model.live="type" value="Texte"
-                                    class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
-                                <span class="ml-2">Text</span>
-                            </label>
-                            <label class="flex items-center text-gray-600 cursor-pointer">
-                                <input type="radio" wire:model.live="type" value="Roman"
-                                    class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
-                                <span class="ml-2">Roman</span>
-                            </label>
-                            <label class="flex items-center text-gray-600 cursor-pointer">
-                                <input type="radio" wire:model.live="type" value="Image"
-                                    class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
-                                <span class="ml-2">Image</span>
-                            </label>
-                            <label class="flex items-center text-gray-600 cursor-pointer">
-                                <input type="radio" wire:model.live="type" value="Comic"
-                                    class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
-                                <span class="ml-2">Comic</span>
-                            </label>
+                            @foreach ($types as $type)
+                                <label class="flex items-center text-gray-600 cursor-pointer">
+                                    <input type="radio" wire:model.live="type" value="{{ $type->id }}"
+                                        class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    <span class="ml-2">{{ $type->name }}</span>
+                                </label>
+                            @endforeach
                         </div>
                     </div>
 
