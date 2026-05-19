@@ -28,7 +28,7 @@
                                 <h3 class="text-3xl font-bold text-gray-900">{{ $book->designation }} </h3>
                                 <ul class="mt-2 flex flex-wrap gap-x-4 gap-y-2 text-gray-500">
                                     <li>{{ $book->auteur }} </li>
-                                    <li class="list-disc list-inside">{{ $book->type }} </li>
+                                    <li class="list-disc list-inside">{{ $book->type->name }} </li>
                                 </ul>
                                 <div class="mt-6 border-t border-gray-200 pt-6">
                                     <h4 class="text-xl font-semibold text-gray-800">{{ __('books.description') }}</h4>

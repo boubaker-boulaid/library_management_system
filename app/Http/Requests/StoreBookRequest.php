@@ -25,13 +25,14 @@ class StoreBookRequest extends FormRequest
             'designation' => 'required|string|max:255',
             'auteur' => 'required|string|max:255',
             'prix' => 'required|numeric|gt:0',
-            'type' => 'required|string|max:255',
+            'type_id' => 'required|exists:types,id',
             'annee' => 'nullable|date',
             'categorie' => 'nullable|string|max:255',
             'editeur' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'categories' => 'required|array|exists:categories,id'
+            'categories' => 'required|array|exists:categories,id',
+            'language_id' => 'nullable|exists:languages,id',
         ];
     }
 }
