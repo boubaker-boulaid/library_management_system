@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookController;
-use App\Livewire\BooksFilter;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
