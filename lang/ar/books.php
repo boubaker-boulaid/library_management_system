@@ -27,6 +27,8 @@ return [
     'sort_title' => 'العنوان',
     'sort_price_high_low' => 'السعر (من الأعلى إلى الأقل)',
     'sort_price_low_high' => 'السعر (من الأقل إلى الأعلى)',
+    'sort_author_asc' => 'المؤلف (أ إلى ي)',
+    'sort_author_desc' => 'المؤلف (ي إلى أ)',
     'details' => 'التفاصيل',
 
     // Index page

@@ -51,6 +51,10 @@ class BooksFilter extends Component
             $query->orderBy('prix', 'desc');
         } elseif ($this->sort === 'sort_price_low_high') {
             $query->orderBy('prix', 'asc');
+        } elseif ($this->sort === 'sort_author_asc') {
+            $query->orderBy('auteur', 'asc');
+        } elseif ($this->sort === 'sort_author_desc') {
+            $query->orderBy('auteur', 'desc');
         }   
         
         if ($this->category !== 'All') {

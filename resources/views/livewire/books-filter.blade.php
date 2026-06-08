@@ -92,6 +92,12 @@
                                 <option
                                     value="sort_price_low_high">
                                     {{ __('books.sort_price_low_high') }}</option>
+                                <option
+                                    value="sort_author_asc">
+                                    {{ __('books.sort_author_asc') }}</option>
+                                <option
+                                    value="sort_author_desc">
+                                    {{ __('books.sort_author_desc') }}</option>
                             </select>
                         </div>
                     </div>

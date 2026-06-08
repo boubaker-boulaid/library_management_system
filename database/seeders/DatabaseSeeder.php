@@ -17,18 +17,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        
+        // 1. Seed categories, languages, and types first
+        $this->call([
+            CategorySeeder::class,
+            LanguageSeeder::class,
+            TypeSeeder::class,
+        ]);
 
-        $languages = Language::all();
-        $types = Type::all();
+        // 2. Seed books
+        $this->call([
+            BookSeeder::class,
+        ]);
 
-        Book::chunk(100, function($books) use ($languages, $types) {
-            foreach($books as $book) {
-                $book->update([
-                    'language_id' => $languages->random()->id,
-                    'type_id' => $types->random()->id,
-                ]);
-            }
-        });
+        // 3. Create a default admin/user account for testing
+        \App\Models\User::factory()->create([
+            'name' => 'Mohamed',
+            'email' => 'mohamed@example.com',
+            'password' => bcrypt('password'),
+            'role' => 'admin',
+        ]);
     }
 }

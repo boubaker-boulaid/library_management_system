@@ -27,6 +27,8 @@ return [
     'sort_title' => 'titre',
     'sort_price_high_low' => 'prix (élevé au bas)',
     'sort_price_low_high' => 'prix (bas à élevé)',
+    'sort_author_asc' => 'auteur (A à Z)',
+    'sort_author_desc' => 'auteur (Z à A)',
     'details' => 'Détails',
 
     // Index page

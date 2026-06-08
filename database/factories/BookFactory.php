@@ -19,15 +19,13 @@ class BookFactory extends Factory
         return [
             'designation' => $this->faker->unique()->sentence(3),
             'description' => $this->faker->paragraph(),
-            'type' => $this->faker->randomElement(['Texte', 'Image', 'Audio', 'Video']),
-            'langue' => $this->faker->randomElement(['Arabe', 'Francais', 'Anglais', 'Espagnol','Allemand']),
             'editeur' => $this->faker->company(),
-            'categorie' => $this->faker->randomElement(['Classique', 'Science Fiction','Fantastique', 'Horreur', 'Romance', 'Mystere']),
             'prix' => $this->faker->randomFloat(2, 0, 900),
             'annee' => $this->faker->date(),
             'auteur' => $this->faker->name(),
             'cover' => 'no_cover.jpg',
-
+            'type_id' => \App\Models\Type::inRandomOrder()->first()?->id ?? 1,
+            'language_id' => \App\Models\Language::inRandomOrder()->first()?->id ?? 1,
         ];
     }
 }

@@ -81,6 +81,8 @@ class BookController extends Controller
                 $book->categories()->sync($validated['categories']);
             }
 
+            event(new \App\Events\BookCreated($book));
+
             DB::commit();
             //Log the success
             Log::info('Book added successfully: ' . $validated['designation']);
@@ -149,6 +151,8 @@ class BookController extends Controller
                 $book->categories()->sync($validated['categories']);
             }
 
+            event(new \App\Events\BookUpdated($book));
+
             DB::commit();
 
             //Log success
@@ -171,6 +175,8 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         try {
+
+            event(new \App\Events\BookDeleted($book));
 
             $book->delete();
 
