@@ -12,6 +12,17 @@ class BookSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Book::factory()->count(40)->create();
+        $categories = \App\Models\Category::all();
+
+        \App\Models\Book::factory()
+            ->count(40)
+            ->create()
+            ->each(function ($book) use ($categories) {
+                if ($categories->isNotEmpty()) {
+                    $book->categories()->attach(
+                        $categories->random(rand(1, 3))->pluck('id')->toArray()
+                    );
+                }
+            });
     }
 }
