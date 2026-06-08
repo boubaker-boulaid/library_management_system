@@ -47,6 +47,8 @@ class BookApiController extends Controller
 
             $book = Book::create($validated);
 
+            event(new \App\Events\BookCreated($book));
+
             Log::info("the book ". $validated['designation']. " created successfully from api");
 
             return response()->json([
@@ -99,6 +101,8 @@ class BookApiController extends Controller
 
             $book->update($validated);
 
+            event(new \App\Events\BookUpdated($book));
+
             Log::info("the book ". $validated['designation']. " updated successfully from api");
 
             return response()->json([
@@ -126,6 +130,8 @@ class BookApiController extends Controller
     {
        try {
             
+            event(new \App\Events\BookDeleted($book));
+
             $book->delete();
 
             Log::info("the book ". $book['designation']. " removed successfully");
