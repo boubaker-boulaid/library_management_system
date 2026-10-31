@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'subject' => 'Envoyer le livre',
+    'subject' => 'Détails du livre : :title',
     'header_title' => 'Biblio Project',
     'subtitle' => 'Détails du livre demandé',
     'category' => 'Catégorie',
@@ -14,4 +14,5 @@ return [
     'currency' => 'DH',
     'footer' => '&copy; :year Biblio Project. Tous droits réservés.',
     'disclaimer' => 'Ceci est un message automatique. Veuillez ne pas répondre directement à cet e-mail.',
+    'view_book' => 'Voir le livre',
 ];

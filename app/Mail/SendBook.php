@@ -14,15 +14,12 @@ class SendBook extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $book;
-
     /**
      * Create a new message instance.
      */
-    
-    public function __construct(Book $book)
+    public function __construct(public Book $book)
     {
-        $this->book = $book;
+        $this->book->loadMissing(['categories', 'language', 'type']);
     }
 
     /**
@@ -31,7 +28,7 @@ class SendBook extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Send Book',
+            subject: __('email.subject', ['title' => $this->book->designation]),
         );
     }
 
@@ -41,18 +38,7 @@ class SendBook extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'emails.books.send',
-            with: ['book' => $this->book],
+            markdown: 'emails.books.send',
         );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
     }
 }

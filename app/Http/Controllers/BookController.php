@@ -12,6 +12,7 @@ use App\Models\Type;
 use App\Services\BookService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
@@ -108,7 +109,9 @@ class BookController extends Controller
      */
     public function mailBookToUser(Request $request, Book $book): RedirectResponse
     {
-        Mail::to($request->user())->queue(new SendBook($book));
+        Mail::to($request->user())
+            ->locale(App::currentLocale())
+            ->queue(new SendBook($book));
 
         return redirect()->back()->with('success', __('books.email_sent'));
     }
