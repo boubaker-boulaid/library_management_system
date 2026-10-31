@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\SetLocalization;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -18,10 +17,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             AddLinkHeadersForPreloadedAssets::class,
             SetLocalization::class,
-        ]);
-
-        $middleware->alias([
-            'admin' => IsAdmin::class ,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
