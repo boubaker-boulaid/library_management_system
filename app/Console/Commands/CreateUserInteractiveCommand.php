@@ -4,7 +4,8 @@ namespace App\Console\Commands;
 
 use App\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
 
 class CreateUserInteractiveCommand extends Command
 {
@@ -13,33 +14,53 @@ class CreateUserInteractiveCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'users:create';
+    protected $signature = 'users:create {--admin : Give the new user the admin role}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'create a new user ';
+    protected $description = 'Create a new user interactively';
 
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
-        $name = $this->ask('Nom de l\'utilisateur ?');
-        $email = $this->ask('Email ?');
-        $password = $this->secret('Mot de passe ?');
-        $confirm = $this->confirm('Créer cet utilisateur ?', true);
-        if ($confirm) {
-            User::create([
-                'name' => $name,
-                'email' => $email,
-                'password' => Hash::make($password),
-            ]);
-            $this->info('Utilisateur créé avec succès !');
-        } else {
-            $this->warn('Création annulée.');
+        $data = [
+            'name' => $this->ask('Name'),
+            'email' => $this->ask('Email'),
+            'password' => $this->secret('Password'),
+        ];
+
+        $validator = Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', Password::defaults()],
+        ]);
+
+        if ($validator->fails()) {
+            foreach ($validator->errors()->all() as $error) {
+                $this->error($error);
+            }
+
+            return self::FAILURE;
         }
+
+        $role = $this->option('admin') ? User::ROLE_ADMIN : User::ROLE_USER;
+
+        if (! $this->confirm("Create {$role} {$data['email']}?", true)) {
+            $this->warn('Cancelled.');
+
+            return self::SUCCESS;
+        }
+
+        $user = User::create($validator->validated());
+        $user->forceFill(['role' => $role])->save();
+
+        $this->info("User {$user->email} created (id {$user->id}, role {$role}).");
+
+        return self::SUCCESS;
     }
 }

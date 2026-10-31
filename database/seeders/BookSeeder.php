@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Book;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 
 class BookSeeder extends Seeder
@@ -12,9 +13,9 @@ class BookSeeder extends Seeder
      */
     public function run(): void
     {
-        $categories = \App\Models\Category::all();
+        $categories = Category::all();
 
-        \App\Models\Book::factory()
+        Book::factory()
             ->count(40)
             ->create()
             ->each(function ($book) use ($categories) {

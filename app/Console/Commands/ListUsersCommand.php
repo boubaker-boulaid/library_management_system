@@ -13,30 +13,29 @@ class ListUsersCommand extends Command
      * @var string
      */
     protected $signature = 'users:list';
+
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Affiche la liste de tous les utilisateurs';
+    protected $description = 'List all users';
 
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
-        $users = User::all();
+        $users = User::orderBy('id')->get(['id', 'name', 'email', 'role']);
 
-        if($users->isEmpty())
-        {
-            $this->warn('No users found');
-            return;
+        if ($users->isEmpty()) {
+            $this->warn('No users found.');
+
+            return self::SUCCESS;
         }
 
-        $this->info('Users List :');
-        foreach($users as $user)
-        {
-            $this->line("ID : {$user->id} | Name : {$user->name} | Email : {$user->email} ");
-        }
+        $this->table(['ID', 'Name', 'Email', 'Role'], $users->map->only(['id', 'name', 'email', 'role']));
+
+        return self::SUCCESS;
     }
 }
