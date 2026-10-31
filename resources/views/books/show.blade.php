@@ -69,10 +69,13 @@
                         </div>
                         @auth
                             <div class="mt-6">
-                            <a href="{{ route('sendBook', $book) }}"
-                                class="w-full flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
-                                {{ __('books.show.send') }} 
-                            </a>
+                            <form action="{{ route('sendBook', $book) }}" method="POST">
+                                @csrf
+                                <button type="submit"
+                                    class="w-full flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                                    {{ __('books.show.send') }}
+                                </button>
+                            </form>
                         </div>
                         @endauth
                         
