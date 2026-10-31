@@ -18,6 +18,15 @@ class User extends Authenticatable
     public const ROLE_ADMIN = 'admin';
 
     /**
+     * The model's default values for attributes.
+     *
+     * @var array<string, mixed>
+     */
+    protected $attributes = [
+        'role' => self::ROLE_USER,
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>

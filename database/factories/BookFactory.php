@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Language;
+use App\Models\Type;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,8 +26,9 @@ class BookFactory extends Factory
             'annee' => $this->faker->date(),
             'auteur' => $this->faker->name(),
             'cover' => 'no_cover.jpg',
-            'type_id' => \App\Models\Type::inRandomOrder()->first()?->id ?? 1,
-            'language_id' => \App\Models\Language::inRandomOrder()->first()?->id ?? 1,
+            // Reuse seeded lookup rows when they exist, otherwise create one.
+            'type_id' => fn () => Type::inRandomOrder()->first() ?? Type::factory(),
+            'language_id' => fn () => Language::inRandomOrder()->first() ?? Language::factory(),
         ];
     }
 }
