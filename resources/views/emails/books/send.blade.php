@@ -47,7 +47,7 @@
                 @if($book->annee)
                 <div class="flex flex-col">
                     <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ __('email.year') }}</span>
-                    <span class="text-slate-700 font-medium">{{ \Carbon\Carbon::parse($book->annee)->format('Y') }}</span>
+                    <span class="text-slate-700 font-medium">{{ $book->annee->format('Y') }}</span>
                 </div>
                 @endif
                 <div class="flex flex-col">

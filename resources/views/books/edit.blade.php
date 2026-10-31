@@ -68,7 +68,7 @@
                         <label for="annee">{{ __('books.year') }}</label>
                         <input type="date" id="annee" name="annee"
                             class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            value="{{old('annee' , $book->annee ?? '')}}">
+                            value="{{ old('annee', $book->annee?->format('Y-m-d')) }}">
                         @error('annee')
                             <span class="text-red-500 text-sm mt-2">{{$message}}</span>
                         @enderror

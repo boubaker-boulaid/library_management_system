@@ -24,11 +24,11 @@ class LogBookActivity
         if ($action) {
             $details = null;
             if ($action === 'updated') {
-                $details = json_encode($event->book->getChanges());
+                $details = $event->book->getChanges();
             } elseif ($action === 'created') {
-                $details = json_encode($event->book->only([
-                    'designation', 'description', 'prix', 'auteur', 'type_id', 'language_id', 'annee', 'editeur'
-                ]));
+                $details = $event->book->only([
+                    'designation', 'description', 'prix', 'auteur', 'type_id', 'language_id', 'annee', 'editeur',
+                ]);
             }
 
             ActivityLog::create([
