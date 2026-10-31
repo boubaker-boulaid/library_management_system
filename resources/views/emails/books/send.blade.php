@@ -1,83 +1,36 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Details: {{ $book->designation }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-slate-50 font-sans antialiased text-slate-900 m-0 p-0">
-    <div class="max-w-2xl mx-auto my-10 bg-white rounded-2xl overflow-hidden shadow-xl border border-slate-100">
-        <!-- Header -->
-        <div class="bg-gradient-to-br from-indigo-600 via-purple-600 to-fuchsia-600 p-10 text-center">
-            <h1 class="text-3xl font-extrabold text-white tracking-tight m-0">{{ __('email.header_title') }}</h1>
-            <p class="text-indigo-100 mt-2 text-lg font-medium opacity-90">{{ __('email.subtitle') }}</p>
-        </div>
+<x-mail::message>
+# {{ __('email.subtitle') }}
 
-        <!-- Content -->
-        <div class="p-8 md:p-12">
-            @if($book->cover && $book->cover !== 'no_cover.jpg')
-            <div class="flex justify-center mb-8">
-                <img src="{{ $book->cover_url }}" alt="{{ $book->designation }}" class="w-48 h-auto rounded-lg shadow-lg border-4 border-white">
-            </div>
-            @endif
+@if ($book->cover && $book->cover !== \App\Services\BookCoverStorage::PLACEHOLDER)
+<img src="{{ $book->cover_url }}" alt="{{ $book->designation }}" width="192" style="display: block; margin: 0 auto 24px; border-radius: 8px;">
+@endif
 
-            <div class="border-b border-slate-200 pb-6 mb-8">
-                <h2 class="text-2xl font-bold text-slate-800 leading-tight">{{ $book->designation }}</h2>
-                <p class="text-indigo-600 font-semibold mt-1">By {{ $book->auteur }}</p>
-            </div>
+## {{ $book->designation }}
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-8 mb-10">
-                <div class="flex flex-col">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ __('email.category') }}</span>
-                    <span class="text-slate-700 font-medium">{{ $book->categorie }}</span>
-                </div>
-                <div class="flex flex-col">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ __('email.language') }}</span>
-                    <span class="text-slate-700 font-medium">{{ $book->language?->name }}</span>
-                </div>
-                <div class="flex flex-col">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ __('email.publisher') }}</span>
-                    <span class="text-slate-700 font-medium">{{ $book->editeur }}</span>
-                </div>
-                <div class="flex flex-col">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ __('email.type') }}</span>
-                    <span class="text-slate-700 font-medium">{{ $book->type?->name }}</span>
-                </div>
-                @if($book->annee)
-                <div class="flex flex-col">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ __('email.year') }}</span>
-                    <span class="text-slate-700 font-medium">{{ $book->annee->format('Y') }}</span>
-                </div>
-                @endif
-                <div class="flex flex-col">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ __('email.price') }}</span>
-                    <div>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-emerald-50 text-emerald-700 border border-emerald-100">
-                            {{ number_format($book->prix, 2) }} {{ __('email.currency') }}
-                        </span>
-                    </div>
-                </div>
-            </div>
+{{ $book->auteur }}
 
-            <!-- Description -->
-            <div class="bg-slate-50 rounded-xl p-6 border-l-4 border-indigo-500">
-                <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-3">{{ __('email.description') }}</h3>
-                <p class="text-slate-600 leading-relaxed text-sm">
-                    {{ $book->description }}
-                </p>
-            </div>
-        </div>
+<x-mail::table>
+| | |
+|:--|:--|
+| **{{ __('email.category') }}** | {{ $book->categories->pluck('name')->join(', ') ?: '—' }} |
+| **{{ __('email.language') }}** | {{ $book->language?->name ?? '—' }} |
+| **{{ __('email.type') }}** | {{ $book->type?->name ?? '—' }} |
+| **{{ __('email.publisher') }}** | {{ $book->editeur ?: '—' }} |
+@if ($book->annee)
+| **{{ __('email.year') }}** | {{ $book->annee->format('Y') }} |
+@endif
+| **{{ __('email.price') }}** | {{ number_format((float) $book->prix, 2) }} {{ __('email.currency') }} |
+</x-mail::table>
 
-        <!-- Footer -->
-        <div class="bg-slate-50 border-t border-slate-100 p-8 text-center">
-            <p class="text-slate-400 text-xs m-0">
-                {!! __('email.footer', ['year' => date('Y')]) !!}
-            </p>
-            <p class="text-slate-400 text-[10px] mt-2 italic">
-                {{ __('email.disclaimer') }}
-            </p>
-        </div>
-    </div>
-</body>
-</html>
+@if ($book->description)
+**{{ __('email.description') }}**
+
+{{ $book->description }}
+@endif
+
+<x-mail::button :url="route('book.show', $book)">
+{{ __('email.view_book') }}
+</x-mail::button>
+
+<small>{{ __('email.disclaimer') }}</small>
+</x-mail::message>
