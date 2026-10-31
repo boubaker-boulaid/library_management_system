@@ -6,82 +6,88 @@ use App\Models\Book;
 use App\Models\Category;
 use App\Models\Language;
 use App\Models\Type;
+use Illuminate\Support\Collection;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class BooksFilter extends Component
 {
     use WithPagination;
-    public $sort = 'sort_newest';
-    public $category = 'All';
-    public $language = 'All';
-    public $type = 'All';
 
-    public function updatedSort()
+    /**
+     * Allowed sort options mapped to [column, direction].
+     */
+    private const SORTS = [
+        'sort_newest' => ['created_at', 'desc'],
+        'sort_oldest' => ['created_at', 'asc'],
+        'sort_title' => ['designation', 'asc'],
+        'sort_price_high_low' => ['prix', 'desc'],
+        'sort_price_low_high' => ['prix', 'asc'],
+        'sort_author_asc' => ['auteur', 'asc'],
+        'sort_author_desc' => ['auteur', 'desc'],
+    ];
+
+    #[Url(except: 'sort_newest')]
+    public string $sort = 'sort_newest';
+
+    #[Url(except: '')]
+    public string $category = '';
+
+    #[Url(except: '')]
+    public string $language = '';
+
+    #[Url(except: '')]
+    public string $type = '';
+
+    public function updated(string $property): void
     {
-        $this->resetPage();
+        if (in_array($property, ['sort', 'category', 'language', 'type'], true)) {
+            $this->resetPage();
+        }
     }
 
-    public function updatedCategory()
+    #[Computed(persist: true)]
+    public function categories(): Collection
     {
-        $this->resetPage();
+        return Category::orderBy('name')->get(['id', 'name']);
     }
 
-    public function updatedLanguage()
+    #[Computed(persist: true)]
+    public function languages(): Collection
     {
-        $this->resetPage();
+        return Language::orderBy('name')->get(['id', 'name']);
     }
 
-    public function updatedType()
+    #[Computed(persist: true)]
+    public function types(): Collection
     {
-        $this->resetPage();
+        return Type::orderBy('name')->get(['id', 'name']);
     }
 
     public function render()
     {
-        $query = Book::query();
+        [$column, $direction] = self::SORTS[$this->sort] ?? self::SORTS['sort_newest'];
 
-        if ($this->sort === 'sort_newest') {
-            $query->latest();
-        } elseif ($this->sort === 'sort_oldest') {
-            $query->oldest();
-        } elseif ($this->sort === 'sort_title') {
-            $query->orderBy('designation', 'asc');
-        } elseif ($this->sort === 'sort_price_high_low') {
-            $query->orderBy('prix', 'desc');
-        } elseif ($this->sort === 'sort_price_low_high') {
-            $query->orderBy('prix', 'asc');
-        } elseif ($this->sort === 'sort_author_asc') {
-            $query->orderBy('auteur', 'asc');
-        } elseif ($this->sort === 'sort_author_desc') {
-            $query->orderBy('auteur', 'desc');
-        }   
-        
-        if ($this->category !== 'All') {
-            $query->whereHas('categories', function ($q) {
-                $q->where('name', $this->category);
-            });
-        }
-
-        if ($this->language !== 'All') {
-            $query->where('language_id', $this->language);
-        }
-
-        if ($this->type !== 'All') {
-            $query->where('type_id', $this->type);
-        }
-
-        $books = $query->with('categories:id,name')->paginate(4);
-        $categories = Category::latest()->get();
-        $languages = Language::latest()->get();
-        $types = Type::latest()->get();
+        $books = Book::query()
+            ->with('categories:id,name')
+            ->when($this->category !== '', fn ($query) => $query->whereHas(
+                'categories',
+                fn ($query) => $query->whereKey((int) $this->category)
+            ))
+            ->when($this->language !== '', fn ($query) => $query->where('language_id', (int) $this->language))
+            ->when($this->type !== '', fn ($query) => $query->where('type_id', (int) $this->type))
+            ->orderBy($column, $direction)
+            ->orderBy('id', $direction)
+            ->paginate(4);
 
         return view('livewire.books-filter', [
             'books' => $books,
             'booksCount' => $books->total(),
-            'categories' => $categories,
-            'languages' => $languages,
-            'types' => $types
+            'categories' => $this->categories,
+            'languages' => $this->languages,
+            'types' => $this->types,
         ]);
     }
 }

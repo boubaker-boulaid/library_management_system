@@ -16,11 +16,9 @@
                         <h5 class="font-semibold text-gray-800 mb-3">{{ __('books.filter_categories') }}</h5>
                         <select name="category" wire:model.live="category"
                             class="w-full bg-gray-50 border border-gray-300 rounded-md text-gray-800 focus:ring-blue-500 focus:border-blue-500 text-sm p-2.5">
-                            <option value="All">
-                                All
-                            </option>
+                            <option value="">{{ __('books.filter_all') }}</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->name }}">
+                                <option value="{{ $category->id }}">
                                     {{$category->name }}
                                 </option>
                             @endforeach
@@ -32,7 +30,7 @@
                         <div class="space-y-2">
                             <label class="flex items-center text-gray-600 cursor-pointer">
                                 <input type="radio" wire:model.live="language"
-                                    value="All" 
+                                    value=""
                                     class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
                                 <span class="ml-2">{{ __('books.filter_all_language') }}</span>
                             </label>
@@ -44,15 +42,16 @@
                                     <span class="ml-2">{{ $language->name }}</span>
                                 </label>
                             @endforeach
+                        </div>
                     </div>
 
                     <div>
                         <h5 class="font-semibold text-gray-800 mb-3">{{ __('books.type') }}</h5>
                         <div class="space-y-2">
                             <label class="flex items-center text-gray-600 cursor-pointer">
-                                <input type="radio" wire:model.live="type" value="All"
+                                <input type="radio" wire:model.live="type" value=""
                                     class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500">
-                                <span class="ml-2">{{ __('books.filter_all_language') }}</span>
+                                <span class="ml-2">{{ __('books.filter_all') }}</span>
                             </label>
                             @foreach ($types as $type)
                                 <label class="flex items-center text-gray-600 cursor-pointer">
@@ -112,7 +111,7 @@
                                     <img src="{{ $book->cover_url }}" alt="Book Cover"
                                         class="w-20 h-auto object-cover rounded-md mr-4">
                                     <div>
-                                        <a href={{ route('book.show', $book) }}
+                                        <a href="{{ route('book.show', $book) }}"
                                             class="text-lg font-semibold text-gray-900 hover:text-blue-600">{{ $book->designation }}
                                         </a>
                                         <ul class="flex flex-wrap gap-x-4 text-sm text-gray-500 mt-1">
@@ -125,7 +124,7 @@
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <a href={{ route('book.show', $book) }}
+                                    <a href="{{ route('book.show', $book) }}"
                                         class="text-blue-600 hover:underline">{{ __('books.details') }}</a>
                                     <span class="block text-lg font-semibold text-gray-900 mt-1">{{ $book->prix }}
                                     </span>
