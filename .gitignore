@@ -22,3 +22,5 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+/public/covers/*
+!/public/covers/no_cover.jpg
