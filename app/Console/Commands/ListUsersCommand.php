@@ -5,8 +5,6 @@ namespace App\Console\Commands;
 use App\Models\User;
 use Illuminate\Console\Command;
 
-use function PHPUnit\Framework\isEmpty;
-
 class ListUsersCommand extends Command
 {
     /**
