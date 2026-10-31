@@ -12,6 +12,7 @@ use App\Models\Type;
 use App\Services\BookService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
@@ -117,7 +118,7 @@ class BookController extends Controller
     }
 
     /**
-     * @return array{categories: \Illuminate\Support\Collection, languages: \Illuminate\Support\Collection, types: \Illuminate\Support\Collection}
+     * @return array{categories: Collection, languages: Collection, types: Collection}
      */
     private function formOptions(): array
     {

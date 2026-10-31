@@ -2,6 +2,9 @@
 
 namespace App\Listeners;
 
+use App\Events\BookCreated;
+use App\Events\BookDeleted;
+use App\Events\BookUpdated;
 use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,11 +16,11 @@ class LogBookActivity
     public function handle(object $event): void
     {
         $action = '';
-        if ($event instanceof \App\Events\BookCreated) {
+        if ($event instanceof BookCreated) {
             $action = 'created';
-        } elseif ($event instanceof \App\Events\BookUpdated) {
+        } elseif ($event instanceof BookUpdated) {
             $action = 'updated';
-        } elseif ($event instanceof \App\Events\BookDeleted) {
+        } elseif ($event instanceof BookDeleted) {
             $action = 'deleted';
         }
 

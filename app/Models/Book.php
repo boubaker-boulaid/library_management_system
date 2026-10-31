@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Services\BookCoverStorage;
+use Database\Factories\BookFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Book extends Model
 {
-    /** @use HasFactory<\Database\Factories\BookFactory> */
+    /** @use HasFactory<BookFactory> */
     use HasFactory;
 
     protected $fillable = ['designation', 'description', 'prix', 'auteur', 'cover', 'type_id',
