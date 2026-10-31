@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/language/{locale}', function (string $locale) {
@@ -21,7 +21,7 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-Route::resource('book', BookController::class)->only(['index','show']);
+Route::resource('book', BookController::class)->only(['index', 'show']);
 
 Route::get('/books', function () {
     return view('books');
@@ -39,9 +39,7 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
-
-
-// breeze routes 
+// breeze routes
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -52,6 +50,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

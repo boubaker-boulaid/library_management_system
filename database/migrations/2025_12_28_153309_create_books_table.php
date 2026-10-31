@@ -12,16 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('books', function (Blueprint $table) {
-            $table->id(); 
-            $table->string('designation')->unique(); 
-            $table->text('description'); 
-            $table->string('type')->default('Texte'); 
-            $table->string('langue')->default('Francais'); 
-            $table->string('editeur')->default('Anonyme'); 
-            $table->string('categorie')->default('Nouveau'); 
-            $table->date('annee')->nullable(); 
-            $table->double('prix')->default('0'); 
-            $table->string('auteur')->default('Anonyme'); 
+            $table->id();
+            $table->string('designation')->unique();
+            $table->text('description');
+            $table->string('type')->default('Texte');
+            $table->string('langue')->default('Francais');
+            $table->string('editeur')->default('Anonyme');
+            $table->string('categorie')->default('Nouveau');
+            $table->date('annee')->nullable();
+            $table->double('prix')->default('0');
+            $table->string('auteur')->default('Anonyme');
             $table->string('cover')->default('no_cover.jpg');
             $table->timestamps();
         });

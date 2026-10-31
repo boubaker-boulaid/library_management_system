@@ -17,10 +17,10 @@ class LanguageSeeder extends Seeder
             'French',
             'German',
             'Arabic',
-            'English'
+            'English',
         ];
 
-        foreach($languages as $language) {
+        foreach ($languages as $language) {
             Language::firstOrCreate(['name' => $language]);
         }
     }

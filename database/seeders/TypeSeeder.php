@@ -16,7 +16,7 @@ class TypeSeeder extends Seeder
             'Text',
             'Roman',
             'Image',
-            'Comic'
+            'Comic',
         ];
 
         foreach ($types as $type) {

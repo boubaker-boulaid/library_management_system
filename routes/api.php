@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\BookApiController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -11,5 +11,5 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
- 
-Route::apiResource('books',BookApiController::class)->middleware('auth:sanctum');
+
+Route::apiResource('books', BookApiController::class)->middleware('auth:sanctum');

@@ -1,9 +1,9 @@
 <?php
 
-use App\Models\User;
 use App\Models\Book;
 use App\Models\Language;
 use App\Models\Type;
+use App\Models\User;
 use Laravel\Sanctum\Sanctum;
 
 beforeEach(function () {
@@ -24,7 +24,7 @@ test('user can log in via API and receive a token', function () {
     $response->assertStatus(200)
         ->assertJsonStructure([
             'token',
-            'user' => ['id', 'name', 'email', 'role']
+            'user' => ['id', 'name', 'email', 'role'],
         ]);
 });
 
