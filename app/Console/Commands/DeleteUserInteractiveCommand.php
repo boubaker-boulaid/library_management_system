@@ -19,29 +19,33 @@ class DeleteUserInteractiveCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Delete a user interactive way';
+    protected $description = 'Delete a user interactively';
 
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
-        $users = User::pluck('name', 'id')->toArray();
-        if (empty($users)) {
-            $this->warn('Aucun utilisateur à supprimer.');
-            return;
+        // Label by id and email: names are not unique.
+        $users = User::orderBy('id')->get()
+            ->mapWithKeys(fn (User $user) => [$user->id => "#{$user->id} {$user->name} <{$user->email}>"]);
+
+        if ($users->isEmpty()) {
+            $this->warn('No users to delete.');
+
+            return self::SUCCESS;
         }
-        $userId = $this->choice(
-            'Quel utilisateur souhaitez-vous supprimer ?',
-            array_values($users),
-            0
-        );
-        $selectedId = array_search($userId, $users);
-        if ($this->confirm("Supprimer {$userId} (ID: {$selectedId}) ?")) {
-            User::destroy($selectedId);
-            $this->info('Utilisateur supprimé !');
+
+        $label = $this->choice('Which user do you want to delete?', $users->values()->all());
+        $userId = $users->search($label);
+
+        if ($this->confirm("Delete {$label}?")) {
+            User::destroy($userId);
+            $this->info('User deleted.');
         } else {
-            $this->warn('Suppression annulée.');
+            $this->warn('Cancelled.');
         }
+
+        return self::SUCCESS;
     }
 }

@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Type;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TypeSeeder extends Seeder
@@ -21,9 +20,7 @@ class TypeSeeder extends Seeder
         ];
 
         foreach ($types as $type) {
-            Type::create([
-                'name' => $type
-            ]);
+            Type::firstOrCreate(['name' => $type]);
         }
     }
 }
