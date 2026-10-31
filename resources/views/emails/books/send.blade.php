@@ -18,7 +18,7 @@
         <div class="p-8 md:p-12">
             @if($book->cover && $book->cover !== 'no_cover.jpg')
             <div class="flex justify-center mb-8">
-                <img src="{{ asset('covers/' . $book->cover) }}" alt="{{ $book->designation }}" class="w-48 h-auto rounded-lg shadow-lg border-4 border-white">
+                <img src="{{ $book->cover_url }}" alt="{{ $book->designation }}" class="w-48 h-auto rounded-lg shadow-lg border-4 border-white">
             </div>
             @endif
 

@@ -30,7 +30,7 @@ class UpdateBookRequest extends FormRequest
             'annee' => 'nullable|date',
             'editeur' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'categories' => 'required|array|exists:categories,id',
             'language_id' => 'nullable|exists:languages,id'
         ];

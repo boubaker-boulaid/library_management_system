@@ -109,7 +109,7 @@
                             <div
                                 class="bg-white rounded-lg p-4 flex items-center justify-between border border-gray-200 shadow-sm hover:shadow-lg transition">
                                 <div class="flex items-center">
-                                    <img src="{{ asset('covers/' . $book->cover) }}" alt="Book Cover"
+                                    <img src="{{ $book->cover_url }}" alt="Book Cover"
                                         class="w-20 h-auto object-cover rounded-md mr-4">
                                     <div>
                                         <a href={{ route('book.show', $book) }}

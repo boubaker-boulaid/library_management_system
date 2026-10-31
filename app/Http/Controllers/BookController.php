@@ -9,6 +9,7 @@ use App\Models\Book;
 use App\Models\Category;
 use App\Models\Language;
 use App\Models\Type;
+use App\Services\BookCoverStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -61,7 +62,7 @@ class BookController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBookRequest $request)
+    public function store(StoreBookRequest $request, BookCoverStorage $covers)
     {
         DB::beginTransaction();
 
@@ -69,14 +70,9 @@ class BookController extends Controller
 
             $validated = $request->validated();
 
-            if ($request->hasFile('cover') && $request->file('cover')->isValid()) {
-                $image = $request->file('cover');
-                $imageName = time() . '_' . $image->getClientOriginalName();
-                $image->move(public_path('covers'), $imageName);
-                $validated['cover'] = $imageName;
+            if ($request->hasFile('cover')) {
+                $validated['cover'] = $covers->store($request->file('cover'));
             }
-
-            
 
             $book = Book::create($validated);
             
@@ -93,6 +89,10 @@ class BookController extends Controller
             return redirect()->route('book.index')->with('success', __('books.added_success'));
         } catch (\Exception $e) {
             DB::rollBack();
+
+            if (isset($validated['cover'])) {
+                $covers->delete($validated['cover']);
+            }
 
             //Log the error
             Log::error('Error adding book: ' . $e->getMessage());
@@ -130,24 +130,17 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBookRequest $request, Book $book)
+    public function update(UpdateBookRequest $request, Book $book, BookCoverStorage $covers)
     {
+        $oldCover = $book->cover;
+
         DB::beginTransaction();
         try {
 
             $validated = $request->validated();
 
-            //delete the old cover before saving the new one 
-            if ($book->cover && file_exists(public_path('covers/' . $book->cover)) && $book->cover !== 'no_cover.jpg') {
-                unlink(public_path('covers/' . $book->cover));
-            }
-
-            //checks if a file with name cover was uploaded and the upload went successfully without errors
-            if ($request->hasFile('cover') && $request->file('cover')->isValid()){
-                $image = $request->file('cover');
-                $imageName = time() . '_' . $image->getClientOriginalName(); //set a unique name to the cover 
-                $image->move(public_path('covers'), $imageName); //move the cover to public/covers/
-                $validated['cover'] = $imageName;
+            if ($request->hasFile('cover')) {
+                $validated['cover'] = $covers->store($request->file('cover'));
             }
 
             $book->update($validated);
@@ -160,12 +153,21 @@ class BookController extends Controller
 
             DB::commit();
 
+            // Only remove the previous cover once the new one is saved in the database.
+            if (isset($validated['cover'])) {
+                $covers->delete($oldCover);
+            }
+
             //Log success
             Log::info('Book updated successfully: ' . $validated['designation']);
 
             return redirect()->route('book.show', $book)->with('success', __('books.updated_success'));
         } catch (\Exception $e) {
             DB::rollBack();
+
+            if (isset($validated['cover'])) {
+                $covers->delete($validated['cover']);
+            }
 
             //Log error 
             Log::error('error updating the book ' . $book->designation . ': ' . $e->getMessage());
@@ -177,7 +179,7 @@ class BookController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Book $book)
+    public function destroy(Book $book, BookCoverStorage $covers)
     {
         Gate::authorize('delete', $book);
 
@@ -187,10 +189,7 @@ class BookController extends Controller
 
             $book->delete();
 
-            //delete the cover image from the covers folder
-            if ($book->cover && file_exists(public_path('covers/' . $book->cover)) && $book->cover !== 'no_cover.jpg') {
-                unlink(public_path('covers/' . $book->cover));
-            }
+            $covers->delete($book->cover);
 
             //Log the success
             Log::info('Book removed successfully: ' . $book->designation);

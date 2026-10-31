@@ -22,7 +22,7 @@
                         <div class="md:flex items-start">
                             <div class="flex-shrink-0 mr-6 mb-4 md:mb-0">
                                 <img class="w-48 h-auto object-cover rounded-md shadow-lg mx-auto"
-                                    src="{{ asset('covers/' . $book->cover) }}" alt="Book Cover">
+                                    src="{{ $book->cover_url }}" alt="Book Cover">
                             </div>
                             <div class="flex-grow">
                                 <h3 class="text-3xl font-bold text-gray-900">{{ $book->designation }} </h3>
