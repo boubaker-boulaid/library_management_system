@@ -52,5 +52,5 @@ test('user can log out via API', function () {
     $response = $this->postJson('/api/logout');
 
     $response->assertStatus(200)
-        ->assertJson(['message' => 'Déconnexion réussie.']);
+        ->assertJson(['message' => __('auth.logged_out')]);
 });

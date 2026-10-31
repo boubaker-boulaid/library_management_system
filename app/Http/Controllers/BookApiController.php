@@ -4,152 +4,69 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
+use App\Http\Resources\BookResource;
 use App\Models\Book;
+use App\Services\BookService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
 
 class BookApiController extends Controller
 {
+    private const RELATIONS = ['categories', 'language', 'type'];
+
+    public function __construct(private BookService $books) {}
+
     /**
-     * Display a listing of the resource.
+     * Display a paginated listing of the resource.
      */
-    public function index()
+    public function index(Request $request): AnonymousResourceCollection
     {
-        try {
+        $perPage = min(max($request->integer('per_page', 15), 1), 100);
 
-            //fetch all books sorted by created_at
-            $books = Book::latest()->get();
-
-            Log::info('Books fetched successfully for api');
-
-            //reurn the books in json format with status code 200
-            return response()->json($books, 200);
-        } catch (\Exception $e) {
-
-            //Log error
-            Log::error('error while fetching books for api : ' . $e->getMessage());
-
-            // return error message with status code 500
-            return response()->json([
-                'error' => 'Something went wrong while fetching books for api'
-            ], 500);
-        }
+        return BookResource::collection(
+            Book::with(self::RELATIONS)->latest()->paginate($perPage)
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBookRequest $request)
+    public function store(StoreBookRequest $request): BookResource
     {
-        try {
-            
-            $validated = $request->validated();
+        $book = $this->books->create($request->validated(), $request->file('cover'));
 
-            $book = Book::create($validated);
-
-            event(new \App\Events\BookCreated($book));
-
-            Log::info("the book ". $validated['designation']. " created successfully from api");
-
-            return response()->json([
-                'message' => 'the book '. $request['designation']. ' created successfully' ,
-                'book' => $book 
-            ], 201);
-        
-        } catch (\Exception $e) {
-            
-            //Log error
-            Log::error('error while fetching books for api : ' . $e->getMessage());
-
-            // return error message with status code 500
-            return response()->json([
-                'error' => 'Something went wrong while stroring the book for api'
-            ], 500);
-
-        }
+        return new BookResource($book->load(self::RELATIONS));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Book $book)
-    {   
-        try {
-
-            return response()->json($book, 200);
-
-        } catch (\Exception $e) {
-            
-            //log error
-            Log::error('error fetching ('. $book->designation . ') to api ' . $e->getMessage());
-
-            return response()->json([
-                'error' => 'Something went wrong while fetching ('. $book->designation . ')  to api'
-            ], 500);
-
-        }
+    public function show(Book $book): BookResource
+    {
+        return new BookResource($book->load(self::RELATIONS));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBookRequest $request, Book $book)
+    public function update(UpdateBookRequest $request, Book $book): BookResource
     {
-        try {
-            
-            $validated = $request->validated();
+        $book = $this->books->update($book, $request->validated(), $request->file('cover'));
 
-            $book->update($validated);
-
-            event(new \App\Events\BookUpdated($book));
-
-            Log::info("the book ". $validated['designation']. " updated successfully from api");
-
-            return response()->json([
-                'message' => 'the book '. $validated['designation']. ' updated successfully' ,
-                'book' => $book 
-            ], 200);
-
-        } catch (\Exception $e) {
-           
-            //Log error
-            Log::error('error while updating  ('. $book->designation . ') from api ' . $e->getMessage());
-
-            // return error message with status code 500
-            return response()->json([
-                'error' => 'Something went wrong while updating ('. $book->designation . ')  from api'
-            ], 500);
-
-        }
+        return new BookResource($book->load(self::RELATIONS));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Book $book)
+    public function destroy(Book $book): Response
     {
         Gate::authorize('delete', $book);
 
-       try {
-            
-            event(new \App\Events\BookDeleted($book));
+        $this->books->delete($book);
 
-            $book->delete();
-
-            Log::info("the book ". $book['designation']. " removed successfully");
-
-            return response()->json($book, 204);
-
-        } catch (\Exception $e) {
-            
-            //log error
-            Log::error('error deleting ('. $book->designation . ') from api ' . $e->getMessage());
-
-            return response()->json([
-                'error' => 'Something went wrong while removing ('. $book->designation . ')'
-            ], 500);
-
-        }
+        return response()->noContent();
     }
 }
