@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Book;
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class UpdateBookRequest extends FormRequest
+class UpdateBookRequest extends StoreBookRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,16 +22,8 @@ class UpdateBookRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'designation' => 'required|string|max:255',
-            'auteur' => 'required|string|max:255',
-            'prix' => 'required|numeric|gt:0',
-            'type_id' => 'required|exists:types,id',
-            'annee' => 'nullable|date',
-            'editeur' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'categories' => 'required|array|exists:categories,id',
-            'language_id' => 'nullable|exists:languages,id'
+            ...parent::rules(),
+            'designation' => ['required', 'string', 'max:255', Rule::unique('books', 'designation')->ignore($this->route('book'))],
         ];
     }
 }

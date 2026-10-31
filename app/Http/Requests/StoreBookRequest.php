@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Book;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreBookRequest extends FormRequest
 {
@@ -23,17 +24,17 @@ class StoreBookRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'designation' => 'required|string|max:255',
-            'auteur' => 'required|string|max:255',
-            'prix' => 'required|numeric|gt:0',
-            'type_id' => 'required|exists:types,id',
-            'annee' => 'nullable|date',
-            'categorie' => 'nullable|string|max:255',
-            'editeur' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'categories' => 'required|array|exists:categories,id',
-            'language_id' => 'nullable|exists:languages,id',
+            'designation' => ['required', 'string', 'max:255', Rule::unique('books', 'designation')],
+            'auteur' => ['required', 'string', 'max:255'],
+            'prix' => ['required', 'numeric', 'gt:0', 'max:99999999.99'],
+            'type_id' => ['required', 'integer', 'exists:types,id'],
+            'annee' => ['nullable', 'date'],
+            'editeur' => ['nullable', 'string', 'max:255'],
+            'description' => ['nullable', 'string', 'max:10000'],
+            'cover' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:2048'],
+            'categories' => ['required', 'array', 'min:1'],
+            'categories.*' => ['integer', 'distinct', 'exists:categories,id'],
+            'language_id' => ['nullable', 'integer', 'exists:languages,id'],
         ];
     }
 }

@@ -47,7 +47,7 @@
                         <h4 class="text-xl font-semibold text-gray-800 border-b border-gray-200 pb-4">{{ __('books.show.overview') }}</h4>
                         <ul class="mt-4 space-y-3 text-gray-600">
                             <li class="flex justify-between"><span>{{ __('books.show.created_at') }}</span> <span
-                                    class="font-medium text-gray-900">{{ $book->annee }} </span></li>
+                                    class="font-medium text-gray-900">{{ $book->annee?->format('Y-m-d') }} </span></li>
                             <li class="flex justify-between"><span>{{ __('books.show.author_label') }}</span> <span
                                     class="font-medium text-gray-900">{{ $book->auteur }} </span></li>
                             <li class="flex justify-between"><span>{{ __('books.show.publisher') }}</span> <span

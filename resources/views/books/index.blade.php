@@ -16,7 +16,7 @@
                         {{ __('books.index.search_results_for', ['query' => request('search')]) }}
                     </h2>
 
-                    <p class="text-gray-600 my-3">{{ __('books.index.found_books', ['count' => $books->count()]) }}</p>
+                    <p class="text-gray-600 my-3">{{ __('books.index.found_books', ['count' => $books->total()]) }}</p>
 
                     <a href="{{ route('book.index') }} " class="text-blue-600 my-3 hover:underline">{{ __('books.index.view_all') }}</a>
                 @else
