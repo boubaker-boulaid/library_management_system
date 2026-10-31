@@ -6,6 +6,7 @@ use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 
 class BookApiController extends Controller
@@ -128,6 +129,8 @@ class BookApiController extends Controller
      */
     public function destroy(Book $book)
     {
+        Gate::authorize('delete', $book);
+
        try {
             
             event(new \App\Events\BookDeleted($book));

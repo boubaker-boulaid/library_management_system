@@ -21,9 +21,9 @@
                     <a href="{{ route('book.index') }} " class="text-blue-600 my-3 hover:underline">{{ __('books.index.view_all') }}</a>
                 @else
                     {{-- All Books --}}
-                    @if (Auth::check())
+                    @can('create', App\Models\Book::class)
                         <a href="{{ route('book.create') }}" class="text-blue-600 font-semibold">{{ __('books.index.add_book') }}</a>
-                    @endif
+                    @endcan
                     <h2 class="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">
                         @lang('books.index.browse')
                     </h2>
@@ -67,7 +67,7 @@
                                 </a>
 
                                 {{-- admin actions  --}}
-                                @if (Auth::check())
+                                @can('update', $book)
                                     <!-- Edit -->
                                     <a href="{{ route('book.edit', $book) }}"
                                         class="group/btn flex flex-col items-center gap-1 text-gray-600 hover:text-amber-600 transition"
@@ -98,7 +98,7 @@
                                             <span class="text-xs font-medium">{{ __('books.index.delete') }}</span>
                                         </button>
                                     </form>
-                                @endif
+                                @endcan
 
 
                                 <!-- Delete -->

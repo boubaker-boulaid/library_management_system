@@ -12,6 +12,7 @@ use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -49,6 +50,8 @@ class BookController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Book::class);
+
         $categories = Category::latest()->get();
         $languages = Language::latest()->get();
         $types = Type::latest()->get();
@@ -113,6 +116,8 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
+        Gate::authorize('update', $book);
+
         $categories = Category::latest()->get();
         $book->load('categories');
         $languages = Language::latest()->get();
@@ -174,6 +179,8 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
+        Gate::authorize('delete', $book);
+
         try {
 
             event(new \App\Events\BookDeleted($book));
