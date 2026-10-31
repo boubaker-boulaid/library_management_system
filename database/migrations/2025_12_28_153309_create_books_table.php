@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id(); 
-            $table->string('designation')->unique()->require(); 
+            $table->string('designation')->unique(); 
             $table->text('description'); 
             $table->string('type')->default('Texte'); 
             $table->string('langue')->default('Francais'); 
