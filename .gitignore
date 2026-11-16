@@ -24,3 +24,4 @@ yarn-error.log
 /.zed
 /public/covers/*
 !/public/covers/no_cover.jpg
+PRODUCTION_AUDIT.md
