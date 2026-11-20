@@ -3,29 +3,29 @@
 
 @section('content')
     <!-- Main Content -->
-    <main class="py-12 bg-gray-50">
+    <main class="py-8 sm:py-12 bg-gray-50">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             
             <div class="flex justify-center">
                 @if (session('success'))
-                    <div class="bg-green-50 border w-96 text text-center border-green-200 text-green-600 px-4 py-3 rounded relative mb-4">
+                    <div class="bg-green-50 border w-full max-w-md text-center border-green-200 text-green-600 px-4 py-3 rounded relative mb-4">
                         {{ session('success') }}
                     </div>
                 @endif
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
 
                 <!-- Left Content (Book Details) -->
                 <div class="lg:col-span-2">
-                    <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-md">
+                    <div class="bg-white p-4 sm:p-6 rounded-lg border border-gray-200 shadow-md">
                         <div class="md:flex items-start">
-                            <div class="flex-shrink-0 mr-6 mb-4 md:mb-0">
-                                <img class="w-48 h-auto object-cover rounded-md shadow-lg mx-auto"
+                            <div class="flex-shrink-0 md:me-6 mb-4 md:mb-0">
+                                <img class="w-40 sm:w-48 h-auto object-cover rounded-md shadow-lg mx-auto"
                                     src="{{ $book->cover_url }}" alt="Book Cover">
                             </div>
-                            <div class="flex-grow">
-                                <h3 class="text-3xl font-bold text-gray-900">{{ $book->designation }} </h3>
+                            <div class="flex-grow min-w-0">
+                                <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 break-words">{{ $book->designation }} </h3>
                                 <ul class="mt-2 flex flex-wrap gap-x-4 gap-y-2 text-gray-500">
                                     <li>{{ $book->auteur }} </li>
                                     <li class="list-disc list-inside">{{ $book->type->name }} </li>
@@ -46,20 +46,20 @@
                     <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-md">
                         <h4 class="text-xl font-semibold text-gray-800 border-b border-gray-200 pb-4">{{ __('books.show.overview') }}</h4>
                         <ul class="mt-4 space-y-3 text-gray-600">
-                            <li class="flex justify-between"><span>{{ __('books.show.created_at') }}</span> <span
-                                    class="font-medium text-gray-900">{{ $book->annee?->format('Y-m-d') }} </span></li>
-                            <li class="flex justify-between"><span>{{ __('books.show.author_label') }}</span> <span
-                                    class="font-medium text-gray-900">{{ $book->auteur }} </span></li>
-                            <li class="flex justify-between"><span>{{ __('books.show.publisher') }}</span> <span
-                                    class="font-medium text-gray-900">{{ $book->editeur }} </span></li>
-                            <li class="flex justify-between"><span>{{ __('books.show.category_label') }}</span> <span
-                                    class="font-medium text-gray-900"> 
+                            <li class="flex justify-between gap-4"><span class="shrink-0">{{ __('books.show.created_at') }}</span> <span
+                                    class="font-medium text-gray-900 text-end break-words">{{ $book->annee?->format('Y-m-d') }} </span></li>
+                            <li class="flex justify-between gap-4"><span class="shrink-0">{{ __('books.show.author_label') }}</span> <span
+                                    class="font-medium text-gray-900 text-end break-words">{{ $book->auteur }} </span></li>
+                            <li class="flex justify-between gap-4"><span class="shrink-0">{{ __('books.show.publisher') }}</span> <span
+                                    class="font-medium text-gray-900 text-end break-words">{{ $book->editeur }} </span></li>
+                            <li class="flex justify-between gap-4"><span class="shrink-0">{{ __('books.show.category_label') }}</span> <span
+                                    class="font-medium text-gray-900 text-end break-words"> 
                                 @foreach ($book->categories as $category )
                                     {{ $category->name }}
                                 @endforeach    
                             </span></li>
-                            <li class="flex justify-between"><span>{{ __('books.show.price_label') }}</span> <span
-                                    class="font-medium text-gray-900">{{ $book->prix }} </span></li>
+                            <li class="flex justify-between gap-4"><span class="shrink-0">{{ __('books.show.price_label') }}</span> <span
+                                    class="font-medium text-gray-900 text-end break-words">{{ $book->prix }} </span></li>
                         </ul>
                         <div class="mt-6">
                             <a href="#"

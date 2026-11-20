@@ -4,10 +4,10 @@
 @section('content')
     <main>
         <!-- Hero Area Start-->
-        <div class="relative bg-gray-100 py-32 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+        <div class="relative bg-gray-100 py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
             <div class="relative max-w-4xl mx-auto text-center">
-                <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">{{ __('home.hero_title') }}</h1>
-                <p class="mt-6 text-xl text-gray-600">{{ __('home.hero_subtitle') }}</p>
+                <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">{{ __('home.hero_title') }}</h1>
+                <p class="mt-4 sm:mt-6 text-lg sm:text-xl text-gray-600">{{ __('home.hero_subtitle') }}</p>
 
                 {{-- Error Message --}}
                 @if (session('error'))
@@ -17,7 +17,7 @@
                 @endif
 
                 <!-- Search Box -->
-                <div class="mt-12 max-w-3xl mx-auto">
+                <div class="mt-8 sm:mt-12 max-w-3xl mx-auto">
                     <form action="{{ route('book.index') }}" method="GET"
                         class="sm:flex items-center bg-white rounded-lg p-2 border border-gray-300 shadow-lg">
                         
@@ -28,7 +28,7 @@
                         </div>
                         {{-- search feild error --}}
                         @error('search')
-                                <span class="text-red-500 text-sm mx-2">{{ $message }}</span>
+                                <span class="block text-red-500 text-sm mx-2 my-1">{{ $message }}</span>
                         @enderror
                         {{-- <div class="mt-2 sm:mt-0 sm:ml-2">
                             <select name="select"
@@ -50,16 +50,16 @@
         <!-- Hero Area End -->
 
         <!-- Categories Start -->
-        <div class="py-24 bg-white">
+        <div class="py-12 sm:py-24 bg-white">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
+                <div class="text-center mb-8 sm:mb-12">
                     <span class="text-blue-600 font-semibold">{{ __('home.categories_label') }}</span>
-                    <h2 class="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">{{ __('home.categories_heading') }}</h2>
+                    <h2 class="mt-2 text-2xl font-extrabold text-gray-900 sm:text-4xl">{{ __('home.categories_heading') }}</h2>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
                     <!-- Single Category -->
                     <div
-                        class="bg-white p-8 rounded-lg text-center border border-gray-200 shadow-md hover:shadow-xl transition">
+                        class="bg-white p-4 sm:p-8 rounded-lg text-center border border-gray-200 shadow-md hover:shadow-xl transition">
                         <div class="text-blue-600 mb-4">
                             <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -72,7 +72,7 @@
                         <span class="text-gray-500">(653)</span>
                     </div>
                     <div
-                        class="bg-white p-8 rounded-lg text-center border border-gray-200 shadow-md hover:shadow-xl transition">
+                        class="bg-white p-4 sm:p-8 rounded-lg text-center border border-gray-200 shadow-md hover:shadow-xl transition">
                         <div class="text-blue-600 mb-4">
                             <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -85,7 +85,7 @@
                         <span class="text-gray-500">(658)</span>
                     </div>
                     <div
-                        class="bg-white p-8 rounded-lg text-center border border-gray-200 shadow-md hover:shadow-xl transition">
+                        class="bg-white p-4 sm:p-8 rounded-lg text-center border border-gray-200 shadow-md hover:shadow-xl transition">
                         <div class="text-blue-600 mb-4">
                             <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -98,7 +98,7 @@
                         <span class="text-gray-500">(658)</span>
                     </div>
                     <div
-                        class="bg-white p-8 rounded-lg text-center border border-gray-200 shadow-md hover:shadow-xl transition">
+                        class="bg-white p-4 sm:p-8 rounded-lg text-center border border-gray-200 shadow-md hover:shadow-xl transition">
                         <div class="text-blue-600 mb-4">
                             <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">

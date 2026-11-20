@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('titre', __('books.index.title'))
 @section('content')
-    <div class="py-24 bg-white">
+    <div class="py-10 sm:py-16 lg:py-24 bg-white">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
+            <div class="text-center mb-8 sm:mb-12">
                 @if (session('success'))
                     <div class="bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded relative mb-4">
                         {{ session('success') }}
@@ -12,7 +12,7 @@
 
                 {{-- Search Results --}}
                 @if (request('search'))
-                    <h2 class="text-2xl font-bold my-3 text-gray-900">
+                    <h2 class="text-xl sm:text-2xl font-bold my-3 text-gray-900 break-words">
                         {{ __('books.index.search_results_for', ['query' => request('search')]) }}
                     </h2>
 
@@ -24,14 +24,14 @@
                     @can('create', App\Models\Book::class)
                         <a href="{{ route('book.create') }}" class="text-blue-600 font-semibold">{{ __('books.index.add_book') }}</a>
                     @endcan
-                    <h2 class="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    <h2 class="mt-2 text-2xl font-extrabold text-gray-900 sm:text-4xl">
                         @lang('books.index.browse')
                     </h2>
                 @endif
 
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
                 @foreach ($books as $book)
                     <div
                         class="group relative bg-white rounded-xl shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-200 overflow-hidden">
@@ -43,19 +43,19 @@
                         </div>
 
                         <!-- Card Content -->
-                        <div class="p-5 space-y-4">
-                            <h3 class="font-bold text-lg text-gray-900 line-clamp-2 leading-tight">
+                        <div class="p-3 sm:p-5 space-y-2 sm:space-y-4">
+                            <h3 class="font-bold text-base sm:text-lg text-gray-900 line-clamp-2 leading-tight break-words">
                                 {{ $book->designation }}
                             </h3>
-                            <p class="text-sm text-gray-600">{{ $book->auteur }}</p>
+                            <p class="text-sm text-gray-600 truncate">{{ $book->auteur }}</p>
 
                             <!-- Action Buttons -->
-                            <div class="flex justify-center gap-6 pt-3 border-t border-gray-100">
+                            <div class="flex justify-center gap-2 sm:gap-6 pt-3 border-t border-gray-100">
                                 <!-- View -->
                                 <a href="{{ route('book.show', $book) }}"
                                     class="group/btn flex flex-col items-center gap-1 text-gray-600 hover:text-blue-600 transition"
                                     title="View Book">
-                                    <div class="p-3 rounded-full bg-blue-50 group-hover/btn:bg-blue-100 transition">
+                                    <div class="p-2 sm:p-3 rounded-full bg-blue-50 group-hover/btn:bg-blue-100 transition">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -72,7 +72,7 @@
                                     <a href="{{ route('book.edit', $book) }}"
                                         class="group/btn flex flex-col items-center gap-1 text-gray-600 hover:text-amber-600 transition"
                                         title="Edit Book">
-                                        <div class="p-3 rounded-full bg-amber-50 group-hover/btn:bg-amber-100 transition">
+                                        <div class="p-2 sm:p-3 rounded-full bg-amber-50 group-hover/btn:bg-amber-100 transition">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -88,7 +88,7 @@
                                             onclick="return confirm('{{ __('books.index.delete_confirm') }}')"
                                             class="group/btn flex flex-col items-center gap-1 text-gray-600 hover:text-red-600 transition"
                                             title="Delete Book">
-                                            <div class="p-3 rounded-full bg-red-50 group-hover/btn:bg-red-100 transition">
+                                            <div class="p-2 sm:p-3 rounded-full bg-red-50 group-hover/btn:bg-red-100 transition">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor"
                                                     viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

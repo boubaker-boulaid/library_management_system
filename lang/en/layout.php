@@ -24,7 +24,7 @@ return [
     'footer_newsletter_title' => 'Newsletter',
     'footer_newsletter_placeholder' => 'Email Address',
     'footer_newsletter_button' => 'Go',
-    'footer_copyright' => 'Copyright &copy; :year. All rights reserved.',
+    'footer_copyright' => 'Copyright © :year. All rights reserved.',
 
     'lang_en' => 'English',
     'lang_fr' => 'French',

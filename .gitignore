@@ -24,4 +24,15 @@ yarn-error.log
 /.zed
 /public/covers/*
 !/public/covers/no_cover.jpg
+# Demo covers used by BookSeeder
+!/public/covers/1767052418_9.jpg
+!/public/covers/1767099676_1.jpg
+!/public/covers/1767099860_4.jpg
+!/public/covers/1767099940_13.jpg
+!/public/covers/1767101202_26.jpg
+!/public/covers/1767101306_50.jpg
+!/public/covers/1767112221_5.jpg
+!/public/covers/1767114994_9.jpg
+!/public/covers/1767115049_42.jpg
+!/public/covers/hh.jpg
 PRODUCTION_AUDIT.md

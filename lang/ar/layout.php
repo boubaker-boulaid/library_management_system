@@ -24,7 +24,7 @@ return [
     'footer_newsletter_title' => 'النشرة البريدية',
     'footer_newsletter_placeholder' => 'البريد الإلكتروني',
     'footer_newsletter_button' => 'انتقال',
-    'footer_copyright' => 'جميع الحقوق محفوظة &copy; :year.',
+    'footer_copyright' => 'جميع الحقوق محفوظة © :year.',
 
     'lang_en' => 'الإنجليزية',
     'lang_fr' => 'الفرنسية',
