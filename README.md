@@ -161,4 +161,3 @@ Tokens expire after `SANCTUM_EXPIRATION` minutes (7 days by default). The schedu
 
 In production the app forces HTTPS links, sends HSTS on secure requests, asks for stronger passwords (10 characters or more, with upper and lower case and numbers), and refuses destructive database commands such as `migrate:fresh`.
 
-[PRODUCTION_AUDIT.md](PRODUCTION_AUDIT.md) lists the issues that were found and fixed.
