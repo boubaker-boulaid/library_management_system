@@ -3,13 +3,13 @@
 @section('content')
     <!-- Main Content -->
     <main>
-        <div class="bg-white py-24 sm:py-32">
-            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="bg-white py-12 sm:py-24 lg:py-32">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div
-                    class="mx-auto grid max-w-2xl grid-cols-1 items-start gap-x-8 gap-y-16 sm:gap-y-24 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+                    class="mx-auto grid max-w-2xl grid-cols-1 items-start gap-x-8 gap-y-10 sm:gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2">
                     <div class="lg:pr-4">
                         <div
-                            class="relative overflow-hidden rounded-3xl bg-gray-900 px-6 pb-9 pt-64 shadow-2xl sm:px-12 lg:max-w-lg lg:px-8 lg:pb-8 xl:px-10 xl:pb-10">
+                            class="relative overflow-hidden rounded-3xl bg-gray-900 px-6 pb-9 pt-48 sm:pt-64 shadow-2xl sm:px-12 lg:max-w-lg lg:px-8 lg:pb-8 xl:px-10 xl:pb-10">
                             <img class="absolute inset-0 h-full w-full object-cover"
                                 src="https://source.unsplash.com/random/600x800/?library,team" alt="">
                         </div>

@@ -1,6 +1,6 @@
- <footer class="bg-white border-t border-gray-200 mt-12">
+ <footer class="bg-white border-t border-gray-200 mt-8 sm:mt-12">
         <div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div>
                     <h4 class="text-lg font-semibold text-gray-800">{{ __('layout.footer_about_title') }}</h4>
                     <p class="mt-2 text-gray-500">{{ __('layout.footer_about_text') }}</p>
@@ -24,9 +24,9 @@
                     <h4 class="text-lg font-semibold text-gray-800">{{ __('layout.footer_newsletter_title') }}</h4>
                     <form class="mt-4 flex">
                         <input type="email" placeholder="{{ __('layout.footer_newsletter_placeholder') }}"
-                            class="w-full px-3 py-2 rounded-l-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            class="w-full min-w-0 px-3 py-2 rounded-s-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <button type="submit"
-                            class="px-4 py-2 rounded-r-md bg-blue-600 hover:bg-blue-700 text-white font-semibold">{{ __('layout.footer_newsletter_button') }}</button>
+                            class="shrink-0 px-4 py-2 rounded-e-md bg-blue-600 hover:bg-blue-700 text-white font-semibold">{{ __('layout.footer_newsletter_button') }}</button>
                     </form>
                 </div>
             </div>

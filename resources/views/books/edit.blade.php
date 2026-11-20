@@ -4,8 +4,8 @@
 
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="max-w-3xl mx-auto">
-            <div class="bg-white p-8 rounded-lg border border-gray-200 shadow-md">
-                <h2 class="text-3xl font-bold text-center text-gray-900 mb-6">{{ __('books.edit.edit_title', ['designation' => $book->designation]) }}</h2>
+            <div class="bg-white p-5 sm:p-8 rounded-lg border border-gray-200 shadow-md">
+                <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-6">{{ __('books.edit.edit_title', ['designation' => $book->designation]) }}</h2>
                 
                 @if ($errors->any())
                     <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6 rounded-r-md">
@@ -17,7 +17,7 @@
                     @csrf
                     @method('PUT')
 
-                    <div class="m-4">
+                    <div class="my-4">
                         <label for="designation">{{ __('books.designation') }}</label>
                         <input type="text" id="designation" name="designation"
                             class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -28,7 +28,7 @@
                         @enderror
                     </div>
 
-                    <div class="m-4">
+                    <div class="my-4">
                         <label for="auteur">{{ __('books.author') }}</label>
                         <input type="text" id="auteur" name="auteur"
                             class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -38,7 +38,7 @@
                         @enderror
                     </div>
                     
-                    <div class="m-4">
+                    <div class="my-4">
                         <label for="prix">{{ __('books.price') }}</label>
                         <input type="number" id="prix" name="prix"
                             class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -48,7 +48,7 @@
                         @enderror
                     </div>
 
-                    <div class="m-4">
+                    <div class="my-4">
                         <label for="type_id" class="block text-sm font-medium text-gray-700 mb-2">{{ __('books.type') }}</label>
                         <select name="type_id" id="type_id"
                             class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-800 text-sm">
@@ -64,7 +64,7 @@
                         @enderror
                     </div>
 
-                    <div class="m-4">
+                    <div class="my-4">
                         <label for="annee">{{ __('books.year') }}</label>
                         <input type="date" id="annee" name="annee"
                             class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -75,7 +75,7 @@
                     </div>
 
 
-                    <div class="m-4">
+                    <div class="my-4">
                         <label for="categorie">{{ __('books.category') }}</label>
                         <select name="categories[]" multiple
                             class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-800 text-sm min-h-[120px]">
@@ -90,7 +90,7 @@
                         @enderror
                     </div>
 
-                    <div class="m-4">
+                    <div class="my-4">
                         <label for="language_id" class="block text-sm font-medium text-gray-700 mb-2">{{ __('books.filter_language') }}</label>
                         <select name="language_id" id="language_id"
                             class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-800 text-sm">
@@ -106,7 +106,7 @@
                         @enderror
                     </div>
 
-                    <div class="m-4">
+                    <div class="my-4">
                         <label for="description">{{ __('books.description') }}</label>
                         <textarea name="description" id="description" cols="30" rows="10"
                             class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -117,7 +117,7 @@
                         @enderror
                     </div>
 
-                    <div class="m-4">
+                    <div class="my-4">
                         <label for="cover">{{ __('books.cover') }}</label>
                         <input type="file" id="cover" name="cover"
                             class="w-full px-3 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
